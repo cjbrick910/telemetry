@@ -28,7 +28,9 @@
         <TextBlock HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Command:" VerticalAlignment="Top"/>
         <Button x:Name="send" Content="Send" HorizontalAlignment="Center" Margin="161,45,0,0" Grid.Row="1" VerticalAlignment="Top" Click="sendCommand"/>
         <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Status:" VerticalAlignment="Bottom"/>
-        <TextBlock x:Name="output" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="Command Output:" VerticalAlignment="Center" Height="374" Width="200"/>
+        <TextBlock x:Name="output" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Command Output:" VerticalAlignment="Top" Height="Auto"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Data Output:" VerticalAlignment="Top"/>
+        <TextBlock x:Name="dataout" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="5,22,0,0" Width="130"/>
 
     </Grid>
 </Window>

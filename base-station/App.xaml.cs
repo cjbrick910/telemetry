@@ -8,15 +8,17 @@ using System.Windows;
 using Renci.SshNet;
 using Renci.SshNet.Common;
 
-
 namespace base_station
 {
+    
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
-       
+
+        
+
         public static string Connect(string password)
         {
             string host = "10.10.0.95";
@@ -49,12 +51,23 @@ namespace base_station
 
             string output = cmd.Execute();
 
-            client.RunCommand(command);
-
-
             
+            if (output == null)
+            {
+                return "no data";
+            }
+            else
+            {
+                return output;
+            }
+        }
 
-            return output;
+
+        public static string readData(string password)
+        {
+            
+            string data = sendCommand("head -n 4 /dev/ttyUSB0", password);
+            return data;
         }
     }
 }
