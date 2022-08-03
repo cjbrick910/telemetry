@@ -1,0 +1,34 @@
+﻿<Window x:Class="base_station.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:base_station"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Margin="0,0,0,2">Password:</Label>
+        <PasswordBox x:Name="SSH_Password" Margin="68,0,0,0" HorizontalAlignment="Stretch" Height="20"/>
+        <Button Grid.Column="1" Margin="10,0,90,0" Grid.RowSpan="1" Name="Login" Content="Login" ClickMode="Press" Click="sshLogin" RenderTransformOrigin="0.476,0.444" Height="20"></Button>
+        <TextBlock x:Name="status" HorizontalAlignment="Stretch" Height="29" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" Width="200" Grid.Row="2" Margin="0,10,0,0"/>
+        <TextBox x:Name="commandInput" HorizontalAlignment="Center" Margin="0,22,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Type Command Here" VerticalAlignment="Top" Width="200"/>
+        <TextBlock HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Command:" VerticalAlignment="Top"/>
+        <Button x:Name="send" Content="Send" HorizontalAlignment="Center" Margin="161,45,0,0" Grid.Row="1" VerticalAlignment="Top" Click="sendCommand"/>
+        <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Status:" VerticalAlignment="Bottom"/>
+        <TextBlock x:Name="output" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="Command Output:" VerticalAlignment="Center" Height="374" Width="200"/>
+
+    </Grid>
+</Window>
