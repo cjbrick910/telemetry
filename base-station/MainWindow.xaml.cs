@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Renci.SshNet;
 
 namespace base_station
 {
@@ -27,31 +28,46 @@ namespace base_station
         
         public MainWindow()
         {
-
+            InitializeComponent();        
             InitializeComponent();
-            
-            
-            
-            InitializeComponent();
-           
-
         }
 
+        /*
+         * #####################
+         * # dataread function #
+         * #####################
+         * 
+         * takes in host, username, password
+         * creates client and constantly calls the readData function
+         * 
+         */
         public void dataread(string host, string username, string password)
         {
             
+            //create and connect client
+            SshClient client = new SshClient(host, username, password);
+            client.Connect();
             
+            //main logic loop
             while (true)
             {
-                string output = App.readData(host, username, password);
+                //this is for the other readData function (not ideal, will delete soon)
+                //string output = App.readData(host, username, password);
+
+                string output = App.readData(client);
+                //TODO: make this a real value
                 string rpmtest = "1200.00";
+
+                //convert rpm to double for progressbar use
                 double rpm = Convert.ToDouble(rpmtest);
                 this.Dispatcher.Invoke(() =>
                 {
-                    
+                    //setting value of text block and progressbar
                     dataout.Text = output;
                     rpmbar.Value = rpm;
                 });
+                //sleep for a set amount of time
+                //TODO: make this a user-specified value
                 Thread.Sleep(1000);
             }
         }
