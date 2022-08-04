@@ -43,10 +43,15 @@ namespace base_station
             while (true)
             {
                 string output = App.readData(password);
+                string rpmtest = "1200.00";
+                double rpm = Convert.ToDouble(rpmtest);
                 this.Dispatcher.Invoke(() =>
                 {
+                    
                     dataout.Text = output;
+                    rpmbar.Value = rpm;
                 });
+                Thread.Sleep(1000);
             }
         }
             

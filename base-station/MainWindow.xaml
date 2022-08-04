@@ -30,7 +30,9 @@
         <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Status:" VerticalAlignment="Bottom"/>
         <TextBlock x:Name="output" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Command Output:" VerticalAlignment="Top" Height="Auto"/>
         <TextBlock Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Data Output:" VerticalAlignment="Top"/>
-        <TextBlock x:Name="dataout" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="5,22,0,0" Width="130"/>
+        <TextBlock x:Name="dataout" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="10,138,0,0" Width="130"/>
+        <ProgressBar x:Name="rpmbar" Grid.Column="2" HorizontalAlignment="Center" Height="15" Margin="0,50,0,0" Grid.Row="1" VerticalAlignment="Top" Width="200" Maximum="9000"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="0,29,0,0" Grid.Row="1" TextWrapping="Wrap" Text="RPM:" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

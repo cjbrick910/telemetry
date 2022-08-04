@@ -19,26 +19,7 @@ namespace base_station
 
         
 
-        public static string Connect(string password)
-        {
-            string host = "10.10.0.95";
-            string username = "lenin";
-
-            SshClient client = new SshClient(host, username, password);
-            client.Connect();
-
-            if(client.IsConnected)
-            {
-                return "Connected!";
-            }
-            else
-            {
-                return "Not Connected";
-            }
-            
-
-        }
-
+       
         public static string sendCommand(string command, string password)
         {
             string host = "10.10.0.95";
