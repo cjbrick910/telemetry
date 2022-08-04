@@ -37,12 +37,13 @@ namespace base_station
 
         }
 
-        public void dataread()
+        public void dataread(string host, string username, string password)
         {
-            string password = SSH_Password.Password.ToString();
+            
+            
             while (true)
             {
-                string output = App.readData(password);
+                string output = App.readData(host, username, password);
                 string rpmtest = "1200.00";
                 double rpm = Convert.ToDouble(rpmtest);
                 this.Dispatcher.Invoke(() =>
@@ -60,10 +61,11 @@ namespace base_station
         
         public void sshLogin(object sender, RoutedEventArgs e)
         {
-            
+            string username = userInput.Text.ToString();
             string password = SSH_Password.Password.ToString();
-            
-            var ts = new ThreadStart(dataread);
+            string host = ipAddress.Text.ToString();
+
+            var ts = new ThreadStart(() => dataread(host, username, password));
             var backgroundThread = new Thread(ts);
             backgroundThread.Start();
 
@@ -78,13 +80,17 @@ namespace base_station
 
         private void sendCommand(object sender, RoutedEventArgs e)
         {
+            string username = userInput.Text.ToString();
+            string host = ipAddress.Text.ToString();
             string command = commandInput.Text.ToString();
             string password = SSH_Password.Password.ToString();
 
-            string commandOutput = App.sendCommand(command, password);
+            string commandOutput = App.sendCommand(host, username, command, password);
 
             output.Text = commandOutput;
 
         }
+
+
     }
 }

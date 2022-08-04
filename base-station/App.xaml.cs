@@ -20,11 +20,8 @@ namespace base_station
         
 
        
-        public static string sendCommand(string command, string password)
+        public static string sendCommand(string host, string username, string command, string password)
         {
-            string host = "10.10.0.95";
-            string username = "lenin";
-
             SshClient client = new SshClient(host, username, password);
             client.Connect();
 
@@ -44,10 +41,10 @@ namespace base_station
         }
 
 
-        public static string readData(string password)
+        public static string readData(string host, string username, string password)
         {
             
-            string data = sendCommand("head -n 4 /dev/ttyUSB0", password);
+            string data = sendCommand(host, username, "head -n 4 /dev/ttyUSB0", password);
             return data;
         }
     }
