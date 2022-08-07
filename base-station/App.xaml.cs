@@ -58,7 +58,7 @@ namespace base_station
          */
         public static string readData(SshClient client)
         {
-            var command = client.CreateCommand("head -n 4 /dev/ttyUSB0");
+            var command = client.CreateCommand("head -n 1 /dev/ttyUSB0");
             string data = command.Execute();
             
             return data;

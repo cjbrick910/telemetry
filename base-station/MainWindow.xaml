@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:base_station"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="1*"/>
@@ -19,28 +21,50 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+    
+        <!-- Menu Bar -->
+        <DockPanel>
+            <Menu Width="Auto" Height="30" >
+                <MenuItem Header="_File" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <MenuItem Header="Exit" Click="Exit"/>
+                </MenuItem>
+                <MenuItem Header="_View" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <MenuItem Header="View Graphs" Click="viewGraph"/>
+                </MenuItem>
+                <MenuItem Header="_Help" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <MenuItem Header="About" Click="AboutWindow"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
 
+        <!-- Login Section -->
+        <TextBlock Grid.Row="1" Text="Username:" Margin="0,0,0,203" Width="70" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="userInput" Grid.Row="1" VerticalAlignment="Bottom" Grid.RowSpan="1" Height="20" Margin="64,0,6,201"/>
+
+        <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="IP Address:" VerticalAlignment="Bottom" Width="70" Margin="0,0,0,228"/>
+        <TextBox x:Name="ipAddress" Grid.Row="1" Margin="64,0,6,226" Height="20" VerticalAlignment="Bottom"/>
+        
         <TextBlock Grid.Row="1" Text="Password:" Margin="0,0,0,179" Width="70" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="ipAddress" Grid.Row="1" VerticalAlignment="Bottom" Grid.RowSpan="1" Height="20" Margin="64,0,6,201"/>
         <PasswordBox x:Name="SSH_Password" Margin="64,0,6,177" Height="20" Grid.Row="1" VerticalAlignment="Bottom"/>
         <Button Grid.RowSpan="1" Name="Login" Content="Login" ClickMode="Press" Click="sshLogin" RenderTransformOrigin="0.476,0.444" Height="20" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,151" Width="50"/>
-        <TextBlock Grid.Row="1" Text="IP Address:" Margin="0,0,0,203" Width="70" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-
-
-        <TextBlock x:Name="status" HorizontalAlignment="Stretch" Height="29" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" Width="200" Grid.Row="2" Margin="0,10,0,0"/>
-        <TextBox x:Name="commandInput" HorizontalAlignment="Center" Margin="0,25,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Type Command Here" VerticalAlignment="Top" Width="200"/>
+        
+        <!-- Command Input Section -->
+        <TextBox x:Name="commandInput" HorizontalAlignment="Stretch" Margin="0,25,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Type Command Here" VerticalAlignment="Top" Width="190"/>
         <TextBlock HorizontalAlignment="Left" Margin="0,9,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Command:" VerticalAlignment="Top"/>
-        <Button x:Name="send" Content="Send" HorizontalAlignment="Center" Margin="161,45,0,0" Grid.Row="1" VerticalAlignment="Top" Click="sendCommand"/>
+        <Button x:Name="send" Content="Send" HorizontalAlignment="Center" Margin="159,45,0,0" Grid.Row="1" VerticalAlignment="Top" Click="sendCommand"/>
 
-        <TextBlock x:Name="output" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Command Output:" VerticalAlignment="Top" Height="Auto"/>
-
+ 
+        <!-- Data Output Column -->
         <TextBlock Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Data Output:" VerticalAlignment="Top"/>
-        <TextBlock x:Name="dataout" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="0,138,0,0"/>
-        <ProgressBar x:Name="rpmbar" Grid.Column="2" HorizontalAlignment="Center" Height="15" Margin="0,50,0,0" Grid.Row="1" VerticalAlignment="Top" Width="200" Maximum="9000"/>
         <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="0,29,0,0" Grid.Row="1" TextWrapping="Wrap" Text="RPM:" VerticalAlignment="Top"/>
-
-        <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Status:" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="userInput" Grid.Row="1" Margin="64,0,6,226" Height="20" VerticalAlignment="Bottom"/>
-        <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Username:" VerticalAlignment="Bottom" Width="70" Margin="0,0,0,228"/>
+        <ProgressBar x:Name="rpmbar" Grid.Column="2" HorizontalAlignment="Center" Height="15" Margin="0,50,0,0" Grid.Row="1" VerticalAlignment="Top" Width="200" Maximum="9000"/>
+        <TextBlock x:Name="dataout" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="0,138,0,0"/>
+        
+        <!-- Command Output Column -->
+        <TextBlock x:Name="output" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Command Output:" VerticalAlignment="Top" Height="Auto"/>
+        
+        <!-- Status bar -->
+        <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Status:" VerticalAlignment="Bottom" Grid.ColumnSpan="1"/>
+        <TextBlock x:Name="status" HorizontalAlignment="Stretch" Height="29" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" Grid.Row="2" Margin="0,10,0,0" Grid.ColumnSpan="4"/>
     </Grid>
 </Window>

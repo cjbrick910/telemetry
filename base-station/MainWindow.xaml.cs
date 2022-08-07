@@ -14,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Renci.SshNet;
+using OxyPlot;
+using OxyPlot.Wpf;
+
 
 namespace base_station
 {
@@ -47,25 +50,47 @@ namespace base_station
             //create and connect client
             SshClient client = new SshClient(host, username, password);
             client.Connect();
+
+            if (client.IsConnected)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    status.Text = "Connected!";
+                });
+            }
             
             //main logic loop
             while (true)
             {
                 //this is for the other readData function (not ideal, will delete soon)
                 //string output = App.readData(host, username, password);
-
                 string output = App.readData(client);
-                //TODO: make this a real value
-                string rpmtest = "1200.00";
 
-                //convert rpm to double for progressbar use
-                double rpm = Convert.ToDouble(rpmtest);
-                this.Dispatcher.Invoke(() =>
+
+                //main try-catch loop, will make sure program doesnt crash if the uplink computer gives us bad data
+                try
                 {
-                    //setting value of text block and progressbar
-                    dataout.Text = output;
-                    rpmbar.Value = rpm;
-                });
+                    //convert rpm to double for progressbar use
+                    double rpm = Convert.ToDouble(output);
+                    
+                    //need to use these dispatchers since the values of these objects aren't owned by this thread
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //setting value of text block and progressbar
+                        dataout.Text = output;
+                        rpmbar.Value = rpm;
+                    });
+                }
+
+                catch(System.FormatException)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        status.Text = "Error: Data Format is in the wrong format";
+                    });
+                }
+
+                
                 //sleep for a set amount of time
                 //TODO: make this a user-specified value
                 Thread.Sleep(1000);
@@ -107,6 +132,44 @@ namespace base_station
 
         }
 
+        public void RpmViewModel ()
+        {
+            this.rpmGraph = new PlotModel { Title = "RPM Graph" };
 
+
+
+        }
+
+        public PlotModel rpmGraph { get; private set; }
+
+
+
+        /*
+         * ##############################
+         * # Menu Bar Interaction Logic #
+         * ##############################
+         * 
+         * Handles the interaction logic for the different menu bar options
+         * 
+         */
+        //view the About Window
+        private void AboutWindow(object sender, RoutedEventArgs e)
+        {
+            AboutWindow about = new AboutWindow();
+            about.Show();
+        }
+
+        //view the Graph Window
+        private void viewGraph(object sender, RoutedEventArgs e)
+        {
+            GraphView graphWindow = new GraphView();
+            graphWindow.Show();
+        }
+
+        //exit the application
+        private void Exit(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
