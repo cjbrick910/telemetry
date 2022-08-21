@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using OxyPlot;
+using OxyPlot.Wpf;
 
 namespace base_station
 {
@@ -23,5 +25,26 @@ namespace base_station
         {
             InitializeComponent();
         }
+        
+        public void RpmView()
+        {
+
+
+            this.rpmGraph = new PlotModel { Title = "RPM Graph" };
+            this.Points = new List<DataPoint>();
+
+
+
+
+        }
+        public IList<DataPoint> Points { get; private set; }
+        public PlotModel rpmGraph { get; private set; }
+
+
+    }
+
+    public class RpmViewModel
+    {
+        
     }
 }

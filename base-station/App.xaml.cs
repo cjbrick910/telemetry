@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using Renci.SshNet;
 using Renci.SshNet.Common;
+using OxyPlot;
+using OxyPlot.Wpf;
 
 namespace base_station
 {
@@ -63,7 +65,7 @@ namespace base_station
             
             return data;
         }
-        
+
 
         //Other readData function that will create a connection each time it is called (not ideal)
 
@@ -74,5 +76,8 @@ namespace base_station
             return data;
         }
         */
+
+
+        
     }
 }

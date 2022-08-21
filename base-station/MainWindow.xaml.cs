@@ -76,6 +76,7 @@ namespace base_station
                     //need to use these dispatchers since the values of these objects aren't owned by this thread
                     this.Dispatcher.Invoke(() =>
                     {
+                        
                         //setting value of text block and progressbar
                         dataout.Text = output;
                         rpmbar.Value = rpm;
@@ -132,18 +133,7 @@ namespace base_station
 
         }
 
-        public void RpmViewModel ()
-        {
-            this.rpmGraph = new PlotModel { Title = "RPM Graph" };
-
-
-
-        }
-
-        public PlotModel rpmGraph { get; private set; }
-
-
-
+        
         /*
          * ##############################
          * # Menu Bar Interaction Logic #
