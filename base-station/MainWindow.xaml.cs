@@ -28,7 +28,9 @@ namespace base_station
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+        public static string username;
+        public static string password;
+        public static string host;
         public MainWindow()
         {
             InitializeComponent();        
@@ -58,21 +60,30 @@ namespace base_station
                     status.Text = "Connected!";
                 });
             }
-            
+            int x = 0;
             //main logic loop
             while (true)
             {
                 //this is for the other readData function (not ideal, will delete soon)
                 //string output = App.readData(host, username, password);
+                
                 string output = App.readData(client);
 
+                
+
+                
 
                 //main try-catch loop, will make sure program doesnt crash if the uplink computer gives us bad data
                 try
                 {
                     //convert rpm to double for progressbar use
                     double rpm = Convert.ToDouble(output);
+
                     
+
+                   
+                    
+                   
                     //need to use these dispatchers since the values of these objects aren't owned by this thread
                     this.Dispatcher.Invoke(() =>
                     {
@@ -91,7 +102,7 @@ namespace base_station
                     });
                 }
 
-                
+                x++;
                 //sleep for a set amount of time
                 //TODO: make this a user-specified value
                 Thread.Sleep(1000);
@@ -103,12 +114,13 @@ namespace base_station
         
         public void sshLogin(object sender, RoutedEventArgs e)
         {
-            string username = userInput.Text.ToString();
-            string password = SSH_Password.Password.ToString();
-            string host = ipAddress.Text.ToString();
+            username = userInput.Text.ToString();
+            password = SSH_Password.Password.ToString();
+            host = ipAddress.Text.ToString();
 
             var ts = new ThreadStart(() => dataread(host, username, password));
             var backgroundThread = new Thread(ts);
+            backgroundThread.SetApartmentState(ApartmentState.STA);
             backgroundThread.Start();
 
             //status.Text = App.Connect(password);
@@ -122,6 +134,9 @@ namespace base_station
 
         private void sendCommand(object sender, RoutedEventArgs e)
         {
+
+            
+
             string username = userInput.Text.ToString();
             string host = ipAddress.Text.ToString();
             string command = commandInput.Text.ToString();
@@ -130,6 +145,7 @@ namespace base_station
             string commandOutput = App.sendCommand(host, username, command, password);
 
             output.Text = commandOutput;
+           
 
         }
 
