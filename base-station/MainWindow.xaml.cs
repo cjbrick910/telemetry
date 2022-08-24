@@ -28,12 +28,15 @@ namespace base_station
     /// </summary>
     public partial class MainWindow : Window
     {
+        //"Global" parameters for username, password, and host (needed so that other windows can view the login info)
         public static string username;
         public static string password;
         public static string host;
+        
         public MainWindow()
         {
-            InitializeComponent();        
+            InitializeComponent();
+            //not sure if this other InitializeComponent call is needed, but I'm too scared to delete it
             InitializeComponent();
         }
 
@@ -60,7 +63,7 @@ namespace base_station
                     status.Text = "Connected!";
                 });
             }
-            int x = 0;
+            
             //main logic loop
             while (true)
             {
@@ -69,25 +72,15 @@ namespace base_station
                 
                 string output = App.readData(client);
 
-                
-
-                
-
                 //main try-catch loop, will make sure program doesnt crash if the uplink computer gives us bad data
                 try
                 {
                     //convert rpm to double for progressbar use
                     double rpm = Convert.ToDouble(output);
 
-                    
-
-                   
-                    
-                   
                     //need to use these dispatchers since the values of these objects aren't owned by this thread
                     this.Dispatcher.Invoke(() =>
                     {
-                        
                         //setting value of text block and progressbar
                         dataout.Text = output;
                         rpmbar.Value = rpm;
@@ -102,16 +95,19 @@ namespace base_station
                     });
                 }
 
-                x++;
                 //sleep for a set amount of time
                 //TODO: make this a user-specified value
                 Thread.Sleep(1000);
             }
         }
-            
 
-
-        
+        /*
+         * #####################
+         * # sshLogin Function #
+         * #####################
+         * 
+         * Is called when the "Login" button is pressed on the main window
+         */
         public void sshLogin(object sender, RoutedEventArgs e)
         {
             username = userInput.Text.ToString();
@@ -132,10 +128,16 @@ namespace base_station
             */
         }
 
+        /*
+         * ########################
+         * # sendCommand Function #
+         * ########################
+         * 
+         * Is called when the "Send" button is pressed in the main window
+         * requires user info to be put in
+         */
         private void sendCommand(object sender, RoutedEventArgs e)
         {
-
-            
 
             string username = userInput.Text.ToString();
             string host = ipAddress.Text.ToString();
@@ -146,9 +148,7 @@ namespace base_station
 
             output.Text = commandOutput;
            
-
         }
-
         
         /*
          * ##############################
@@ -170,6 +170,7 @@ namespace base_station
         {
             GraphView graphWindow = new GraphView();
             graphWindow.Show();
+            
         }
 
         //exit the application

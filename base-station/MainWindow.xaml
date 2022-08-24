@@ -23,8 +23,8 @@
         </Grid.ColumnDefinitions>
 
         <!-- Menu Bar -->
-        <DockPanel>
-            <Menu Width="Auto" Height="30" >
+        <DockPanel Grid.ColumnSpan="4" >
+            <Menu Width="Auto" Height="19" HorizontalAlignment="Left" DockPanel.Dock="Left" VerticalAlignment="Top">
                 <MenuItem Header="_File" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <MenuItem Header="Exit" Click="Exit"/>
                 </MenuItem>
@@ -38,11 +38,12 @@
         </DockPanel>
 
         <!-- Login Section -->
-        <TextBlock Grid.Row="1" Text="Username:" Margin="0,0,0,203" Width="70" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="userInput" Grid.Row="1" VerticalAlignment="Bottom" Grid.RowSpan="1" Height="20" Margin="64,0,6,201"/>
 
         <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="IP Address:" VerticalAlignment="Bottom" Width="70" Margin="0,0,0,228"/>
         <TextBox x:Name="ipAddress" Grid.Row="1" Margin="64,0,6,226" Height="20" VerticalAlignment="Bottom"/>
+        
+        <TextBlock Grid.Row="1" Text="Username:" Margin="0,0,0,203" Width="70" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="userInput" Grid.Row="1" VerticalAlignment="Bottom" Grid.RowSpan="1" Height="20" Margin="64,0,6,201"/>
 
         <TextBlock Grid.Row="1" Text="Password:" Margin="0,0,0,179" Width="70" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
         <PasswordBox x:Name="SSH_Password" Margin="64,0,6,177" Height="20" Grid.Row="1" VerticalAlignment="Bottom"/>
@@ -66,6 +67,5 @@
         <!-- Status bar -->
         <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Status:" VerticalAlignment="Bottom" Grid.ColumnSpan="1"/>
         <TextBlock x:Name="status" HorizontalAlignment="Stretch" Height="29" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" Grid.Row="2" Margin="0,10,0,0" Grid.ColumnSpan="4"/>
-        <TextBox x:Name="datainput" HorizontalAlignment="Left" Height="54" Margin="5,299,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="185"/>
     </Grid>
 </Window>

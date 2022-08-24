@@ -5,10 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:base_station"
         mc:Ignorable="d"
-        Title="GraphView" Height="450" Width="800">
+        Title="GraphView" Height="500" Width="800">
     <Grid>
 
-        <WpfPlot Name="rpmgraph"/>
-
+        <WpfPlot Name="rpmgraph" Height="450" VerticalAlignment="Top"/>
+        <!--
+        <ComboBox HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="120">
+            <ComboBoxItem Name="500">500ms</ComboBoxItem>
+            <ComboBoxItem Name="1000">1s</ComboBoxItem>
+        </ComboBox>
+        -->
     </Grid>
 </Window>

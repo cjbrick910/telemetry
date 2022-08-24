@@ -20,8 +20,6 @@ namespace base_station
     public partial class App : Application
     {
 
-        
-
         /*
          * ########################
          * # sendCommand Function #
@@ -35,8 +33,10 @@ namespace base_station
             //create and connect client
             try
             {
+                //create a new SshClient object and connect
                 SshClient client = new SshClient(host, username, password);
                 client.Connect();
+
                 //create command and execute it
                 var cmd = client.CreateCommand(command);
                 string output = cmd.Execute();
@@ -51,6 +51,7 @@ namespace base_station
                     return output;
                 }
             }
+            //catching if there's no arguments
             catch (System.ArgumentException) {
                 MessageBox.Show("Please Put in your credentials");
             }
@@ -64,6 +65,7 @@ namespace base_station
          *
          * Takes in Host, Username, Command, and Password 
          * Creates new client and connects, then creates command and executes it
+         * Returns a string with the data (It will not format the string automatically, that should be done on the other side)
          */
         public static string readData(SshClient client)
         {
@@ -73,23 +75,7 @@ namespace base_station
             return data;
         }
 
-        public static double readRPM(SshClient client)
-        {
-            var command = client.CreateCommand("head -n 1 /dev/ttyUSB0 | cut -b 1-4");
-            try
-            {
-                double data = Convert.ToDouble(command.Execute());
-                return data;
-            }
-            catch
-            {
-
-            }
-            return 0.0;
-        }
-
-
-        //Other readData function that will create a connection each time it is called (not ideal)
+        //Other readData function that will create a connection each time it is called (not ideal because this is slower and can cause performance issues on the uplink)
 
         /*
         public static string readData(string host, string username, string password)
@@ -98,9 +84,6 @@ namespace base_station
             return data;
         }
         */
-       
-
-
         
     }
 }
