@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -70,13 +70,17 @@ namespace base_station
                 //this is for the other readData function (not ideal, will delete soon)
                 //string output = App.readData(host, username, password);
                 
-                string output = App.readData(client);
+                string outputRotations = App.readData(client, rpm);
+
+                string outputPressure = App.readData(client, breakPressure);
 
                 //main try-catch loop, will make sure program doesnt crash if the uplink computer gives us bad data
                 try
                 {
                     //convert rpm to double for progressbar use
-                    double rpm = Convert.ToDouble(output);
+                    double rpm = Convert.ToDouble(outputRotations);
+
+                    int breakPressure = Convert.ToDouble(outputPressure);
 
                     //need to use these dispatchers since the values of these objects aren't owned by this thread
                     this.Dispatcher.Invoke(() =>
@@ -84,6 +88,7 @@ namespace base_station
                         //setting value of text block and progressbar
                         dataout.Text = output;
                         rpmbar.Value = rpm;
+                        breakPressure.value = breakPressure;
                     });
                 }
 
