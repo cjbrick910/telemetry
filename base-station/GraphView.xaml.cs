@@ -72,7 +72,7 @@ namespace base_station
                 //main logic loop
                 while (true)
                 {
-                    string output = App.readData(client);
+                    string output = App.readData(client, "rpm");
 
                     //main try-catch loop, will make sure program doesnt crash if the uplink computer gives us bad data
                     try

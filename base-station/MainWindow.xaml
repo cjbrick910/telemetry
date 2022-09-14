@@ -60,7 +60,7 @@
         <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="0,29,0,0" Grid.Row="1" TextWrapping="Wrap" Text="RPM:" VerticalAlignment="Top"/>
         <ProgressBar x:Name="rpmbar" Grid.Column="2" HorizontalAlignment="Center" Height="15" Margin="0,50,0,0" Grid.Row="1" VerticalAlignment="Top" Width="190" Maximum="9000"/>
         <TextBlock x:Name="dataout" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="0,138,0,0"/>
-        <TextBlock x:Name="breakPressure" Grid.Column="2" HorizontalAlignment="Center" Height="15" Margin="0,50,0,0" Grid.Row="1" VerticalAlignment="Top" Width="190" Maximum="9000"/>
+        <TextBlock x:Name="breakPressureDisplay" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" TextWrapping="Wrap" Text="" Width="190" Margin="0,200,0,0"/>
 
         <!-- Command Output Column -->
         <TextBlock x:Name="output" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Command Output:" VerticalAlignment="Top" Height="Auto"/>

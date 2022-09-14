@@ -67,40 +67,31 @@ namespace base_station
          * Creates new client and connects, then creates command and executes it
          * Returns a string with the data (It will not format the string automatically, that should be done on the other side)
          */
-        public static string readData(SshClient client, string sensor )
+        public static string readData(SshClient client, string sensor)
         {
-            
+            SshCommand command;
             switch(sensor)
             {
-                case breakPressure:
+                case "breakPressure":
 
-                var command = client.CreateCommand("head -n 1 /dev/tty/USB1 | cut -b 1-4");
+                    command = client.CreateCommand("head -n 1 /dev/tty/USB1 | cut -b 1-4");
 
 
-                string pressure = command.Execute();
+                    string pressure = command.Execute();
 
-                return pressure; 
+                    return pressure; 
 
-                break; 
+                case "rpm":
 
-                case rpm:
-
-                var command = client.createCommand("head -n 1 /dev/tty/USB0  | cut -b 1-3");
+                    command = client.CreateCommand("head -n 1 /dev/tty/USB0  | cut -b 1-3");
                 
-                string rotations = command.Execute();
+                    string rotations = command.Execute();
 
-                return rotations; 
+                    return rotations;
 
-
-                break; 
-
-                
-
+                default:
+                    return "null";
             }
-            
-            
-            
-
 
             // var command = client.CreateCommand("head -n 1 /dev/ttyUSB0 | cut -b 1-4");
     
