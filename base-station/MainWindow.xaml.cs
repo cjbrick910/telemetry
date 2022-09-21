@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Timers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -20,8 +21,8 @@ using OxyPlot.Wpf;
 
 namespace base_station
 {
-    
-            
+
+
     
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -32,14 +33,55 @@ namespace base_station
         public static string username;
         public static string password;
         public static string host;
-        
+        public static Boolean loggedIn;
+        public static Boolean started;
+        public Task readData;
+        private static System.Timers.Timer refreshRate;
+        public static SshClient client;
+
+
         public MainWindow()
         {
             InitializeComponent();
             //not sure if this other InitializeComponent call is needed, but I'm too scared to delete it
             InitializeComponent();
+            /*
+            var ts = new ThreadStart(() => dataread(host, username, password));
+            var backgroundThread = new Thread(ts);
+            backgroundThread.SetApartmentState(ApartmentState.STA);
+            */
+            //readData = new Task(() => dataread(host, username, password));
+            SetupTimer();
+            
         }
 
+        public void SetupTimer()
+        {
+            refreshRate = new System.Timers.Timer(1000);
+            refreshRate.Elapsed += TimerPulse;
+
+        }
+
+
+        public void TimerPulse(Object source, ElapsedEventArgs e)
+        {
+            var rpm = dataread("rpm").Result.ToString();
+            this.Dispatcher.Invoke(() =>
+            {
+                dataout.Text = rpm;
+                rpmbar.Value = Convert.ToDouble(rpm);
+            });
+            
+
+        }
+
+        public async Task<string> dataread(string sensor)
+        {
+            
+            var output = await App.readDataAsync(client, sensor);
+
+            return output;
+        }
         /*
          * #####################
          * # dataread function #
@@ -49,6 +91,7 @@ namespace base_station
          * creates client and constantly calls the readData function
          * 
          */
+        /*
         public void dataread(string host, string username, string password)
         {
             
@@ -105,6 +148,7 @@ namespace base_station
                 Thread.Sleep(1000);
             }
         }
+        */
 
         /*
          * #####################
@@ -115,14 +159,28 @@ namespace base_station
          */
         public void sshLogin(object sender, RoutedEventArgs e)
         {
+            
             username = userInput.Text.ToString();
             password = SSH_Password.Password.ToString();
             host = ipAddress.Text.ToString();
+            loggedIn = true;
 
+            client = new SshClient(host, username, password);
+            client.Connect();
+            if (client.IsConnected)
+            {
+                status.Text = "Connected!";
+            }
+
+
+
+            /*
             var ts = new ThreadStart(() => dataread(host, username, password));
             var backgroundThread = new Thread(ts);
             backgroundThread.SetApartmentState(ApartmentState.STA);
             backgroundThread.Start();
+            */
+
 
             //status.Text = App.Connect(password);
             /*
@@ -132,6 +190,8 @@ namespace base_station
             }
             */
         }
+
+       
 
         /*
          * ########################
@@ -182,6 +242,28 @@ namespace base_station
         private void Exit(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        public void startStopLogic(object sender, RoutedEventArgs e)
+        {
+
+            if (loggedIn)
+            {
+                
+                if (started == false)
+                {
+
+                    refreshRate.Start();
+                    started = true;
+                    startStop.Content = "Stop";
+                }
+                else if (started == true)
+                {
+                    refreshRate.Stop();
+                    started = false;
+                    startStop.Content = "Start";
+                }
+            }
         }
     }
 }

@@ -57,7 +57,53 @@ namespace base_station
             }
             return "Standby";
         }
+        public static async Task<string> readDataAsync(SshClient client, string sensor)
+        {
+            SshCommand command;
+            /*
+             * ##########################
+             * # Sensor Selection Logic #
+             * ##########################
+             * 
+             * Based on the string we get from the calling function, we can choose what sensor we get info from and therefore what info that function recieves
+             * TODO: Find a way to better differentiate the sensors
+             * 
+             */
+            switch (sensor)
+            {
+                //Sends Brake Pressure from the pressure sensor
+                case "breakPressure":
 
+                    command = client.CreateCommand("head -n 1 /dev/tty/USB1 | cut -b 1-4");
+
+
+                    string pressure = command.Execute();
+
+                    return pressure;
+                //Sends RPM from the hall effect
+                case "rpm":
+
+                    command = client.CreateCommand("head -n 1 /dev/tty/USB0  | cut -b 1-3");
+
+                    //command to test output
+                    //command = client.CreateCommand("echo \"hello\"");
+                    
+                    string rotations = command.Execute();
+
+                    return rotations;
+                //Sends nothing if the string recieved is something different
+                default:
+                    return "null";
+            }
+
+            //Old Data Output logic, has just one serial port it gets data from
+
+            // var command = client.CreateCommand("head -n 1 /dev/ttyUSB0 | cut -b 1-4");
+
+            // string data = command.Execute();
+
+            // return data;
+        }
         /*
          * #####################
          * # readData Function #
@@ -70,8 +116,18 @@ namespace base_station
         public static string readData(SshClient client, string sensor)
         {
             SshCommand command;
+            /*
+             * ##########################
+             * # Sensor Selection Logic #
+             * ##########################
+             * 
+             * Based on the string we get from the calling function, we can choose what sensor we get info from and therefore what info that function recieves
+             * TODO: Find a way to better differentiate the sensors
+             * 
+             */
             switch(sensor)
             {
+                //Sends Brake Pressure from the pressure sensor
                 case "breakPressure":
 
                     command = client.CreateCommand("head -n 1 /dev/tty/USB1 | cut -b 1-4");
@@ -80,7 +136,7 @@ namespace base_station
                     string pressure = command.Execute();
 
                     return pressure; 
-
+                //Sends RPM from the hall effect
                 case "rpm":
 
                     command = client.CreateCommand("head -n 1 /dev/tty/USB0  | cut -b 1-3");
@@ -88,10 +144,12 @@ namespace base_station
                     string rotations = command.Execute();
 
                     return rotations;
-
+                //Sends nothing if the string recieved is something different
                 default:
                     return "null";
             }
+
+            //Old Data Output logic, has just one serial port it gets data from
 
             // var command = client.CreateCommand("head -n 1 /dev/ttyUSB0 | cut -b 1-4");
     
@@ -99,15 +157,6 @@ namespace base_station
             
             // return data;
         }
-        //Other readData function that will create a connection each time it is called (not ideal because this is slower and can cause performance issues on the uplink)
-
-        /*
-        public static string readData(string host, string username, string password)
-        {
-            string data = sendCommand(host, username, "head -n 4 /dev/ttyUSB0", password);
-            return data;
-        }
-        */
         
     }
 }

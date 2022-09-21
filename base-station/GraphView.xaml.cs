@@ -44,12 +44,19 @@ namespace base_station
             Username = MainWindow.username;
             Password = MainWindow.password;
 
-            //starting new thread that calls the addData function (needed because apparently the graph needs to be updated from the GraphView function, it cannot be updated from another function)
-            var datathread = new ThreadStart(() => addData(Host, Username, Password));
-            var backgroundThread = new Thread(datathread);
-            backgroundThread.SetApartmentState(ApartmentState.STA);
-            backgroundThread.Start();
+            if (MainWindow.loggedIn == false)
+            {
+                MessageBox.Show("Please Enter your Credentials");
+            }
+            else
+            {
 
+                //starting new thread that calls the addData function (needed because apparently the graph needs to be updated from the GraphView function, it cannot be updated from another function)
+                var datathread = new ThreadStart(() => addData(Host, Username, Password, "rpm"));
+                var backgroundThread = new Thread(datathread);
+                backgroundThread.SetApartmentState(ApartmentState.STA);
+                backgroundThread.Start();
+            }
         }
         
         /*
@@ -57,11 +64,11 @@ namespace base_station
          * # addData Function #
          * ####################
          * 
-         * takes in host, username, and password
+         * takes in host, username, password, and name of sensor to create graph
          * creates a new ssh client and reads the data by calling App.readData
          * updates graph using a dispatcher
          */
-        public void addData (string host, string username, string password)
+        public void addData (string host, string username, string password, string sensor)
         {
             try
             {
@@ -105,11 +112,13 @@ namespace base_station
             }
 
             //TODO: Fix bug where graph will not update even if user puts in info after this message
+            
             catch (System.ArgumentNullException)
             {
-                MessageBox.Show("Please Enter your Credentials");
+                //MessageBox.Show("Please Enter your Credentials");
                 
             }
+            
             
             
         }
