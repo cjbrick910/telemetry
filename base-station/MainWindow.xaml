@@ -41,7 +41,7 @@
 
         <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="IP Address:" VerticalAlignment="Bottom" Width="70" Margin="0,0,0,228"/>
         <TextBox x:Name="ipAddress" Grid.Row="1" Margin="64,0,6,226" Height="20" VerticalAlignment="Bottom"/>
-        
+
         <TextBlock Grid.Row="1" Text="Username:" Margin="0,0,0,203" Width="70" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
         <TextBox x:Name="userInput" Grid.Row="1" VerticalAlignment="Bottom" Grid.RowSpan="1" Height="20" Margin="64,0,6,201"/>
 
@@ -49,7 +49,15 @@
         <PasswordBox x:Name="SSH_Password" Margin="64,0,6,177" Height="20" Grid.Row="1" VerticalAlignment="Bottom"/>
         <Button Grid.RowSpan="1" Name="Login" Content="Login" ClickMode="Press" Click="sshLogin" RenderTransformOrigin="0.476,0.444" Height="20" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,151" Width="50"/>
 
-        <Button x:Name="startStop" Content="Start" HorizontalAlignment="Left" Margin="17,279,0,0" Grid.Row="1" VerticalAlignment="Top" Click="startStopLogic"/>
+        <!-- Start/Stop Button and Refresh rate selection-->
+        <Button x:Name="startStop" Content="Start" HorizontalAlignment="Left" Margin="1,0,0,21" Grid.Row="1" Click="startStopLogic" Width="68" Height="45" VerticalAlignment="Bottom"/>
+        <ComboBox x:Name="RateChoice" HorizontalAlignment="Left" Margin="74,0,0,32" Grid.Row="1" Width="120" Height="22" VerticalAlignment="Bottom">
+            <ComboBoxItem Content="1" IsSelected="True"></ComboBoxItem>
+            <ComboBoxItem Content="5"></ComboBoxItem>
+            <ComboBoxItem Content="10"></ComboBoxItem>
+            <ComboBoxItem Content="0.5"></ComboBoxItem>
+        </ComboBox>
+
 
         <!-- Command Input Section -->
         <TextBox x:Name="commandInput" HorizontalAlignment="Stretch" Margin="0,25,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Type Command Here" VerticalAlignment="Top" Width="190"/>
@@ -60,7 +68,7 @@
         <!-- Data Output Column -->
         <TextBlock Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Data Output:" VerticalAlignment="Top"/>
         <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="0,29,0,0" Grid.Row="1" TextWrapping="Wrap" Text="RPM:" VerticalAlignment="Top"/>
-        <ProgressBar x:Name="rpmbar" Grid.Column="2" HorizontalAlignment="Center" Height="15" Margin="0,50,0,0" Grid.Row="1" VerticalAlignment="Top" Width="190" Maximum="9000"/>
+        <ProgressBar x:Name="rpmbar" Grid.Column="2" HorizontalAlignment="Center" Height="15" Margin="2,50,2,0" Grid.Row="1" VerticalAlignment="Top" Maximum="9000" Width="190"/>
         <TextBlock x:Name="dataout" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="0,138,0,0"/>
         <TextBlock x:Name="breakPressureDisplay" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" TextWrapping="Wrap" Text="" Width="190" Margin="0,200,0,0"/>
 
@@ -68,8 +76,10 @@
         <TextBlock x:Name="output" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Command Output:" VerticalAlignment="Top" Height="Auto"/>
 
         <!-- Status bar -->
-        <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Status:" VerticalAlignment="Bottom" Grid.ColumnSpan="1"/>
+        <TextBlock HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" Text="Status:" VerticalAlignment="Top" Grid.ColumnSpan="1"/>
         <TextBlock x:Name="status" HorizontalAlignment="Stretch" Height="29" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" Grid.Row="2" Margin="0,10,0,0" Grid.ColumnSpan="4"/>
-        
+        <TextBlock HorizontalAlignment="Left" Margin="74,0,0,59" Grid.Row="1" TextWrapping="Wrap" Width="121" Height="16" VerticalAlignment="Bottom"><Run Text="Refresh Rate (seconds)"/><LineBreak/><Run/></TextBlock>
+
+
     </Grid>
 </Window>

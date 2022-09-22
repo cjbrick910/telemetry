@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Diagnostics;
+using System.Timers;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -31,6 +32,8 @@ namespace base_station
         public string Password { get; set; } 
         public double datapoint { get; set; }
 
+        public double TotalTime;
+
         public GraphView()
         {
             InitializeComponent();
@@ -44,21 +47,51 @@ namespace base_station
             Username = MainWindow.username;
             Password = MainWindow.password;
 
+            MainWindow.refreshRate.Elapsed += TimerPulse;
+
             if (MainWindow.loggedIn == false)
             {
                 MessageBox.Show("Please Enter your Credentials");
             }
             else
             {
-
+                /*
                 //starting new thread that calls the addData function (needed because apparently the graph needs to be updated from the GraphView function, it cannot be updated from another function)
                 var datathread = new ThreadStart(() => addData(Host, Username, Password, "rpm"));
                 var backgroundThread = new Thread(datathread);
                 backgroundThread.SetApartmentState(ApartmentState.STA);
                 backgroundThread.Start();
+                */
             }
         }
-        
+
+
+        public void TimerPulse(Object source, ElapsedEventArgs e)
+        {
+            TotalTime = TotalTime + 1000;
+            var rpm = Convert.ToDouble(dataread("rpm").Result);
+            this.Dispatcher.Invoke(() =>
+            {
+                //TODO: make the x value a time value instead of just a variable that count's up each time
+                rpmgraph.Plot.AddPoint((TotalTime/1000), rpm); //adding a point
+
+                //not sure if these do the same thing, but I'll keep them both just in case (it's not like we're low on memory or storage)
+                rpmgraph.Render();
+                rpmgraph.Refresh();
+            });
+
+
+        }
+
+        public async Task<string> dataread(string sensor)
+        {
+
+            var output = await App.readDataAsync(MainWindow.client, sensor);
+
+
+            return output;
+        }
+
         /*
          * ####################
          * # addData Function #
@@ -68,6 +101,7 @@ namespace base_station
          * creates a new ssh client and reads the data by calling App.readData
          * updates graph using a dispatcher
          */
+        /*
         public void addData (string host, string username, string password, string sensor)
         {
             try
@@ -122,7 +156,7 @@ namespace base_station
             
             
         }
-
+        */
     }
   
 }

@@ -36,7 +36,7 @@ namespace base_station
         public static Boolean loggedIn;
         public static Boolean started;
         public Task readData;
-        private static System.Timers.Timer refreshRate;
+        public static System.Timers.Timer refreshRate;
         public static SshClient client;
 
 
@@ -45,20 +45,17 @@ namespace base_station
             InitializeComponent();
             //not sure if this other InitializeComponent call is needed, but I'm too scared to delete it
             InitializeComponent();
-            /*
-            var ts = new ThreadStart(() => dataread(host, username, password));
-            var backgroundThread = new Thread(ts);
-            backgroundThread.SetApartmentState(ApartmentState.STA);
-            */
-            //readData = new Task(() => dataread(host, username, password));
-            SetupTimer();
+
+            
             
         }
 
         public void SetupTimer()
         {
-            refreshRate = new System.Timers.Timer(1000);
+            double rate = Convert.ToDouble(RateChoice.Text)*1000;
+            refreshRate = new System.Timers.Timer(rate);
             refreshRate.Elapsed += TimerPulse;
+            
 
         }
 
@@ -246,6 +243,7 @@ namespace base_station
 
         public void startStopLogic(object sender, RoutedEventArgs e)
         {
+            SetupTimer();
 
             if (loggedIn)
             {
